@@ -11,7 +11,7 @@
   height: 19px;
   border: none;
   padding: 0;
-  visibility: hidden;
+  visibility: visible;
 }
 
 .element__delete-button:hover {

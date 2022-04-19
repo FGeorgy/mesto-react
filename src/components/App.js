@@ -11,6 +11,7 @@ function App() {
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({});
+  const [isConfirmDeletePopupOpen, setConfirmDeletePopupOpen] = React.useState(false);
 
   function handleEditProfileClick() {
     setEditProfilePopupOpen(true);
@@ -24,12 +25,16 @@ function App() {
   function handleCardClick(card) {
     setSelectedCard(card);
   };
+  function handleCardDeleteClick(card) {
+    setConfirmDeletePopupOpen(true);
+  };
 
   function closeAllPopup() {
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
     setEditAvatarPopupOpen(false);
     setSelectedCard({});
+    setConfirmDeletePopupOpen(false);
   };
 
   return (
@@ -41,6 +46,7 @@ function App() {
           onAddPlace={handleAddPlaceClick}
           onEditAvatar={handleEditAvatarClick}
           onCardClick={handleCardClick}
+          onCardDelete={handleCardDeleteClick}
         />
         <Footer />
       </div>
@@ -92,6 +98,9 @@ function App() {
       <PopupWithForm
         name="delete-element"
         title="Вы уверены?"
+        buttonTitle="Да"
+        isOpen={isConfirmDeletePopupOpen}
+        onClose={closeAllPopup}
       ></PopupWithForm>
 
       <ImagePopup

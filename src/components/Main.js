@@ -14,12 +14,14 @@ function Main(props) {
         setUserName(data.name);
         setUserDescription(data.about);
         setUserAvatar(data.avatar);
-      });
+      })
+      .catch((err) => console.log(err));
 
     Api.getInitialCards()
       .then((data) => {
         setCards(data);
       })
+      .catch((err) => console.log(err));
   }, []);
 
   return (
@@ -60,6 +62,7 @@ function Main(props) {
             key={item._id}
             card={item}
             onCardClick={props.onCardClick}
+            onCardDelete={props.onCardDelete}
           />
         )}
       </section>

@@ -2,6 +2,9 @@ function Card(props) {
   function handleClick() {
     props.onCardClick(props.card);
   };
+  function handleDelete() {
+    props.onCardDelete(props.card);
+  }
 
   return (
     <article className="element">
@@ -22,7 +25,11 @@ function Card(props) {
           </span>
         </div>
       </div>
-      <button type="button" className="element__delete-button"></button>
+      <button
+        type="button"
+        className="element__delete-button"
+        onClick={handleDelete}
+      ></button>
     </article>
   )
 }
