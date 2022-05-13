@@ -1,36 +1,17 @@
 import React from "react";
-import Api from "../utils/Api";
 import Card from "./Card";
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function Main(props) {
-  const [userName, setUserName] = React.useState('');
-  const [userDescription, setUserDescription] = React.useState('');
-  const [userAvatar, setUserAvatar] = React.useState('');
-  const [cards, setCards] = React.useState([]);
-
-  React.useEffect(() => {
-    Api.getUserInfo()
-      .then((data) => {
-        setUserName(data.name);
-        setUserDescription(data.about);
-        setUserAvatar(data.avatar);
-      })
-      .catch((err) => console.log(err));
-
-    Api.getInitialCards()
-      .then((data) => {
-        setCards(data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  const currentUser = React.useContext(CurrentUserContext);
 
   return (
     <main className="main">
       <section className="profile">
         <div className="profile__ellipse">
           <img
-            src={userAvatar}
-            alt={userName}
+            src={currentUser.avatar}
+            alt={currentUser.name}
             className="profile__avatar"
           />
           <button
@@ -46,8 +27,8 @@ function Main(props) {
             name="button-edit-profile"
             onClick={props.onEditProfile}
           ></button>
-          <h1 className="profile__name">{userName}</h1>
-          <p className="profile__about">{userDescription}</p>
+          <h1 className="profile__name">{currentUser.name}</h1>
+          <p className="profile__about">{currentUser.about}</p>
         </div>
         <button
           type="button"
@@ -57,12 +38,13 @@ function Main(props) {
         ></button>
       </section>
       <section className="elements">
-        {cards.map(item => 
+        {props.cards.map(item => 
           <Card
             key={item._id}
             card={item}
             onCardClick={props.onCardClick}
             onCardDelete={props.onCardDelete}
+            onCardLike={props.onCardLike}
           />
         )}
       </section>
